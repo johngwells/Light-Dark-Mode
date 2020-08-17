@@ -13,6 +13,15 @@ function imageMode(color) {
   image3.src = `img/undraw_conceptual_idea_${color}.svg`;
 }
 
+// refactor darkmode/lightmode Functions
+function toggleDarkLightMode(toggle) {
+  toggle ? nav.style.backgroundColor = 'rgb(0 0 0 / 50%)' : nav.style.backgroundColor = 'rgb(255 255 255 / 50%)';
+  toggle ? textBox.style.backgroundColor = 'rgb(255 255 255 / 50%' : textBox.style.backgroundColor = 'rgb(0 0 0 / 50%';
+  toggle ? toggleIcon.children[0].textContent = 'Dark Mode' : toggleIcon.children[0].textContent = 'Light Mode';
+  toggle ? toggleIcon.children[1].classList.replace('fa-sun', 'fa-moon') : toggleIcon.children[1].classList.replace('fa-moon', 'fa-sun');
+  toggle ? imageMode('dark') : imageMode('light');
+}
+
 // Dark Mode Styles - Comment out refactor code
 function darkMode() {
   nav.style.backgroundColor = 'rgb(0 0 0 / 50%)';
@@ -41,11 +50,11 @@ function switchTheme(event) {
   if (event.target.checked) {
     document.documentElement.setAttribute('data-theme', 'dark');
     localStorage.setItem('theme', 'dark');
-    darkMode();
+    toggleDarkLightMode(true);
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
     localStorage.setItem('theme', 'light');
-    lightMode();
+    toggleDarkLightMode(false);
   }
 }
 
@@ -59,9 +68,6 @@ if (currentTheme) {
 
   if (currentTheme === 'dark') {
     toggleSwitch.checked = true;
-    darkMode();
-  } else {
-    toggleSwitch.checked = false;
-    lightMode();
+    toggleDarkLightMode(true);
   }
 }
